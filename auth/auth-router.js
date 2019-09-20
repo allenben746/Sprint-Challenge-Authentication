@@ -1,4 +1,4 @@
-const Users = require('./authModel');
+const Users = require('./auth-model');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -34,6 +34,7 @@ router.post('/login', (req, res) => {
                 res.status(401).json({ message: 'Invalid Credentials' });
             };
         }).catch(err => {
+            console.log(err)
             res.status(500).json({ message: 'Error logging in. Try again.'});
         })
 });
@@ -47,7 +48,7 @@ function getToken(user){
     const options = {
         expiresIn: '3h',
     };
-    return jwt.sign(payload, secret.secret, options);
+    return jwt.sign(payload, secret.jwtSecret, options);
 }
 
 module.exports = router;
